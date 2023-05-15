@@ -1,0 +1,2 @@
+# cat=basic/enable; type=boolean; label=Throw exception when DataHandler's error log is not empty after processing
+throw_exception_on_error_log_entries = 0

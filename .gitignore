@@ -1,0 +1,7 @@
+/Build/node_modules/
+.Build/
+.idea/
+composer.lock
+*.swp
+.DS_Store
+/public

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<psalm resolveFromConfigFile="true"
+       cacheDirectory="../.Build/"
+       errorLevel="5"
+       hideExternalErrors="true">
+    <projectFiles>
+		<directory name="../" />
+		<ignoreFiles>
+			<directory name="../Build" />
+			<directory name="../.Build" />
+		</ignoreFiles>
+    </projectFiles>
+	<issueHandlers>
+		<UndefinedClass>
+			<errorLevel type="suppress">
+				<referencedClass name="Wazum\Sluggi\Upgrade\SlugLockUpgradeWizard" />
+			</errorLevel>
+		</UndefinedClass>
+	</issueHandlers>
+</psalm>
