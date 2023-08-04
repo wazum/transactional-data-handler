@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Wazum\TransactionalDataHandler\Backend;
 
 use Doctrine\DBAL\ConnectionException;
-use Throwable;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
@@ -103,7 +102,7 @@ final class TransactionalDataHandler extends DataHandler
                 'transactional_data_handler',
                 'throw_exception_on_error_log_entries'
             );
-        } catch (Throwable) {
+        } catch (\Throwable) {
             // Ignore
         }
 
@@ -115,7 +114,9 @@ final class TransactionalDataHandler extends DataHandler
         try {
             return GeneralUtility::makeInstance(ConnectionPool::class)
                 ->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME);
-        } catch (Throwable) {
+        } catch (\Throwable $e) {
+            $this->logger->error('Unable to get a Connection: ' . $e->getMessage(), $e->getTrace());
+
             return null;
         }
     }

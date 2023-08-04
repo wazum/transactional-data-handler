@@ -23,6 +23,10 @@ Default value is `0` (the transaction is reset only in case of actually raised (
 
 ## Possible problems
 
+### Error log
+
+Take a look at the TYPO3 CMS error log in case of problems.
+
 ### Extending DataHandler
 
 This extension extends the Core `DataHandler` class (_XCLASS_). If you use any other extension that does the same, you have to solve this yourself somehow.

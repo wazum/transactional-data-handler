@@ -13,6 +13,6 @@ $EM_CONF['transactional_data_handler'] = [
     'constraints' => [
         'depends' => [
             'typo3' => '11.0.0-12.9.99',
-        ]
-    ]
+        ],
+    ],
 ];
