@@ -24,7 +24,7 @@ final class TransactionalDataHandler extends DataHandler
      */
     public function process_datamap(): void
     {
-        $this->processWithTransaction(mapType: DataHandlerMapType::DATA);
+        $this->processWithTransaction('data');
     }
 
     /**
@@ -32,18 +32,18 @@ final class TransactionalDataHandler extends DataHandler
      */
     public function process_cmdmap(): void
     {
-        $this->processWithTransaction(mapType: DataHandlerMapType::COMMAND);
+        $this->processWithTransaction('cmd');
     }
 
     /**
      * @throws \Throwable
      */
-    private function processWithTransaction(DataHandlerMapType $mapType): void
+    private function processWithTransaction(string $mapType): void
     {
         $connection = $this->getConnection();
-        $method = "process_{$mapType->value}map";
+        $method = "process_{$mapType}map";
 
-        if (null === $connection || !$this->shouldProcess("{$mapType->value}map")) {
+        if (null === $connection || !$this->shouldProcess("{$mapType}map")) {
             // Let the parent handle the processing wrapped in the open transaction
             $this->processWithParent($method);
 
@@ -102,7 +102,7 @@ final class TransactionalDataHandler extends DataHandler
                 'transactional_data_handler',
                 'throw_exception_on_error_log_entries'
             );
-        } catch (\Throwable) {
+        } catch (\Throwable $e) {
             // Ignore
         }
 

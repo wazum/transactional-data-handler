@@ -9,10 +9,10 @@ $EM_CONF['transactional_data_handler'] = [
     'state' => 'stable',
     'clearCacheOnLoad' => true,
     'author_company' => 'wazum.com',
-    'version' => '1.0.0',
+    'version' => '10.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '11.0.0-12.9.99',
+            'typo3' => '10.4.0-10.9.99',
         ],
     ],
 ];

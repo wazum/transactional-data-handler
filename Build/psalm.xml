@@ -2,7 +2,7 @@
 <psalm resolveFromConfigFile="true"
        cacheDirectory="../.Build/"
        errorLevel="5"
-	   phpVersion="8.2"
+	   phpVersion="7.2"
        hideExternalErrors="true">
     <projectFiles>
 		<directory name="../" />
