@@ -70,7 +70,8 @@
   "extra": {
     "typo3/cms": {
       "extension-key": "transactional_data_handler",
-      "cms-package-dir": "{$vendor-dir}/typo3/cms"
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": ".Build/Web"
     }
   }
 }
