@@ -4,6 +4,17 @@ This extension wraps all _DataHandler_ process calls (`process_datamap`, `proces
 
 Of course, this also works if there is a timeout (e.g. PHP), since the database will not commit the changes to the tables in this case.
 
+## Installation
+
+Require the package with composer installed:
+
+    composer require "wazum/transactional-data-handler"
+
+Add the following settings to your global setup (`AdditionalConfiguration.php`)
+if you get error messages in the TYPO3 CMS log file that no suitable Connection could be instantiated:
+
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['wrapperClass'] = \Wazum\TransactionalDataHandler\Database\Connection::class;
+
 ## Errors and exceptions
 
 If the corresponding setting is set (see below), any entries in the `DataHandler` error log that happened during the processing will cause a rollback in the database.
