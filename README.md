@@ -4,6 +4,8 @@ This extension wraps all _DataHandler_ process calls (`process_datamap`, `proces
 
 Of course, this also works if there is a timeout (e.g. PHP), since the database will not commit the changes to the tables in this case.
 
+Use at your own risk!
+
 ## Installation
 
 Require the package with composer installed:
@@ -38,6 +40,11 @@ Default value is `0` (the transaction is reset only in case of actually raised (
 
 Take a look at the TYPO3 CMS error log in case of problems.
 
+### Database locks
+
+If you encounter any database locking errors, take a look at the transaction settings section below.
+Also check for missing indexes on your tables that slow down any database transactions.
+
 ### Extending DataHandler
 
 This extension extends the Core `DataHandler` class (_XCLASS_). If you use any other extension that does the same, you have to solve this yourself somehow.
@@ -45,6 +52,34 @@ This extension extends the Core `DataHandler` class (_XCLASS_). If you use any o
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][DataHandler::class] = [
         'className' => TransactionalDataHandler::class
     ];
+
+### MySQL Storage engine and transaction settings
+
+InnoDB supports transactions, which means you can commit and rollback. MyISAM does not (even if you get no errors)!
+
+It makes sense to set the following in your MySQL/MariaDB configuration if you are expecting a transaction to auto-rollback when it encounters an InnoDB lock wait error:
+
+    innodb_rollback_on_timeout=1
+
+Verify after server restart:
+
+    mysql> SHOW GLOBAL VARIABLES LIKE 'innodb_rollback_on_timeout';
+    +----------------------------+-------+
+    | Variable_name              | Value |
+    +----------------------------+-------+
+    | innodb_rollback_on_timeout | ON    |
+    +----------------------------+-------+
+
+You may also want to decrease the value for `innodb_lock_wait_timeout`, you can read more about that [here](https://dev.mysql.com/doc/refman/8.0/en/innodb-parameters.html#sysvar_innodb_lock_wait_timeout)
+
+Another configuration change to consider is setting the [transaction isolation level](https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_transaction_isolation) to `READ COMMITTED`,
+
+    [mysqld] 
+    transaction-isolation = READ-COMMITTED
+
+You can read more about that [here](https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html)
+
+More about InnoDB error handling [here](https://dev.mysql.com/doc/refman/8.0/en/innodb-error-handling.html).
 
 ### Implicit commit
 
